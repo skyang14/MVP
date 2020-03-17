@@ -4,7 +4,7 @@ package com.yangshikun.mvp.baseMVP;
  * Created by yang.shikun on 2020/3/6 14:41
  */
 
-public abstract class BasePresenter<T extends BaseActivity, M extends BaseModel> {
+public abstract class BaseActivityPresenter<T extends BaseActivity, M extends BaseModel> {
     protected T mActivity;
     protected M mModel;
 

@@ -4,19 +4,21 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Created by yang.shikun on 2020/3/6 14:41
  */
 
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity<T extends BaseActivityPresenter> extends SupportActivity {
     protected T mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
+        setContentView(getLayoutId());
         mPresenter.attachView(this);
     }
 
@@ -41,4 +43,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     public abstract T createPresenter();
+
+    /**
+     * 获得布局layout
+     *
+     * @return 布局Layout
+     */
+    protected abstract int getLayoutId();
 }

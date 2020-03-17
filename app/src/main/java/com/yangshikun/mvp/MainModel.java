@@ -7,7 +7,5 @@ import com.yangshikun.mvp.baseMVP.BaseModel;
  */
 
 public class MainModel extends BaseModel {
-    public String getStringFromModel(){
-        return "从Model获取到的数据~~~~";
-    }
+
 }
