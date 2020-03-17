@@ -4,7 +4,7 @@ package com.yangshikun.mvp.baseMVP;
  * Created by yang.shikun on 2020/3/16 14:17
  */
 
-public abstract class BaseFragPresenter<T extends BaseFragment,M extends BaseModel> {
+public abstract class BaseFragPresenter<T extends BaseFragment,M extends BaseModel> implements IPresenter{
     protected T mFragment;
     protected M mModel;
 

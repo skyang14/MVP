@@ -21,6 +21,10 @@ public abstract class BaseFragment<T extends BaseFragPresenter> extends SupportF
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
+        //关联生命周期到Presenter
+        if(mPresenter != null) {
+            getLifecycle().addObserver(mPresenter);
+        }
     }
 
     @Nullable
@@ -61,6 +65,7 @@ public abstract class BaseFragment<T extends BaseFragPresenter> extends SupportF
 
     @Override
     public void onDestroy() {
+        getLifecycle().removeObserver(mPresenter);
         super.onDestroy();
     }
 

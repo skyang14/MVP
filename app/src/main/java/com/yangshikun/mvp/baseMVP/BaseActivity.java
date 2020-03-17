@@ -20,6 +20,10 @@ public abstract class BaseActivity<T extends BaseActivityPresenter> extends Supp
         mPresenter = createPresenter();
         setContentView(getLayoutId());
         mPresenter.attachView(this);
+        //关联生命周期到Presenter
+        if(mPresenter != null) {
+            getLifecycle().addObserver(mPresenter);
+        }
     }
 
     @Override
@@ -39,6 +43,7 @@ public abstract class BaseActivity<T extends BaseActivityPresenter> extends Supp
     @Override
     protected void onDestroy() {
         mPresenter.detachView();
+        getLifecycle().removeObserver(mPresenter);
         super.onDestroy();
     }
 
