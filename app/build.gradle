@@ -59,4 +59,7 @@ dependencies {
   //  implementation 'com.github.Liam6666:FragmentationX:1.0.2.2'
     implementation 'me.yokeyword:fragmentationx:1.0.2'
     implementation 'me.yokeyword:fragmentationx-swipeback:1.0.2'
+
+    //Rxbinding
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
 }

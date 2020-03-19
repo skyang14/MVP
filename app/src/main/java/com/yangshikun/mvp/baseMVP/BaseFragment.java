@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -19,6 +21,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 public abstract class BaseFragment<T extends BaseFragPresenter> extends SupportFragment {
     protected T mPresenter;
     private Unbinder binder;
+    private CompositeDisposable compositeDisposable;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +38,31 @@ public abstract class BaseFragment<T extends BaseFragPresenter> extends SupportF
         mPresenter.attachView(this);
         View view = inflater.inflate(getLayoutId(), container, false);
         binder = ButterKnife.bind(this,view);
+        compositeDisposable = new CompositeDisposable();
         initData();
         initView(view);
         return view;
+    }
+
+
+    /**
+     * 添加订阅
+     * @param disposable
+     */
+    public void addDisposable(Disposable disposable) {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        compositeDisposable.add(disposable);
+    }
+
+    /**
+     * 取消所有订阅
+     */
+    public void clearDisposable() {
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
     }
 
     protected abstract void initData();
@@ -64,6 +89,7 @@ public abstract class BaseFragment<T extends BaseFragPresenter> extends SupportF
     public void onDestroyView() {
         mPresenter.detachView();
         super.onDestroyView();
+        clearDisposable();
         //解除绑定
         binder.unbind();
     }

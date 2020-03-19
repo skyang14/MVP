@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
@@ -16,16 +18,38 @@ import me.yokeyword.fragmentation.SupportActivity;
 public abstract class BaseActivity<T extends BaseActivityPresenter> extends SupportActivity {
     protected T mPresenter;
     private Unbinder binder;
+    private CompositeDisposable compositeDisposable;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
         setContentView(getLayoutId());
         binder = ButterKnife.bind(this);
+        compositeDisposable = new CompositeDisposable();
         mPresenter.attachView(this);
         //关联生命周期到Presenter
         if(mPresenter != null) {
             getLifecycle().addObserver(mPresenter);
+        }
+    }
+
+    /**
+     * 添加订阅
+     * @param disposable
+     */
+    public void addDisposable(Disposable disposable) {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        compositeDisposable.add(disposable);
+    }
+
+    /**
+     * 取消所有订阅
+     */
+    public void clearDisposable() {
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
         }
     }
 
@@ -48,6 +72,7 @@ public abstract class BaseActivity<T extends BaseActivityPresenter> extends Supp
         mPresenter.detachView();
         getLifecycle().removeObserver(mPresenter);
         super.onDestroy();
+        clearDisposable();
         binder.unbind();
     }
 
