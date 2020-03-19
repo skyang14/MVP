@@ -8,14 +8,19 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.yangshikun.mvp.R;
 import com.yangshikun.mvp.baseMVP.BaseFragment;
 
+import butterknife.BindView;
+
 /**
  * Created by yang.shikun on 2020/3/17 11:31
  */
 
 public class HomeFragment extends BaseFragment<HomePresenter> {
-    private TextView tv;
-    private Button bt;
-    private Button bt_go2Fragment;
+    @BindView(R.id.tv)
+    TextView tv;
+    @BindView(R.id.bt)
+    Button bt;
+    @BindView(R.id.bt_go)
+    Button bt_go2Fragment;
 
     @Override
     protected void initData() {
@@ -24,9 +29,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> {
 
     @Override
     protected void initView(View view) {
-        tv = (TextView) view.findViewById(R.id.tv);
-        bt = (Button) view.findViewById(R.id.bt);
-        bt_go2Fragment =(Button)view.findViewById(R.id.bt_go);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

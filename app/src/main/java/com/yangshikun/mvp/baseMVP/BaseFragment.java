@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -16,7 +18,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 public abstract class BaseFragment<T extends BaseFragPresenter> extends SupportFragment {
     protected T mPresenter;
-
+    private Unbinder binder;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public abstract class BaseFragment<T extends BaseFragPresenter> extends SupportF
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mPresenter.attachView(this);
         View view = inflater.inflate(getLayoutId(), container, false);
+        binder = ButterKnife.bind(this,view);
         initData();
         initView(view);
         return view;
@@ -61,6 +64,8 @@ public abstract class BaseFragment<T extends BaseFragPresenter> extends SupportF
     public void onDestroyView() {
         mPresenter.detachView();
         super.onDestroyView();
+        //解除绑定
+        binder.unbind();
     }
 
     @Override

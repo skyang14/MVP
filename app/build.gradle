@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -45,8 +49,8 @@ dependencies {
 
     implementation'com.google.code.gson:gson:2.8.6'
     //butterknife
-/*    implementation'com.jakewharton:butterknife:8.8.1'
-    implementation'com.jakewharton:butterknife-compiler:8.8.1'*/
+    implementation'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
     //utils
     implementation 'com.blankj:utilcodex:1.26.0'

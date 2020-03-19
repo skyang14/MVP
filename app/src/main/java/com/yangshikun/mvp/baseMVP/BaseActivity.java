@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
@@ -13,12 +15,13 @@ import me.yokeyword.fragmentation.SupportActivity;
 
 public abstract class BaseActivity<T extends BaseActivityPresenter> extends SupportActivity {
     protected T mPresenter;
-
+    private Unbinder binder;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
         setContentView(getLayoutId());
+        binder = ButterKnife.bind(this);
         mPresenter.attachView(this);
         //关联生命周期到Presenter
         if(mPresenter != null) {
@@ -45,6 +48,7 @@ public abstract class BaseActivity<T extends BaseActivityPresenter> extends Supp
         mPresenter.detachView();
         getLifecycle().removeObserver(mPresenter);
         super.onDestroy();
+        binder.unbind();
     }
 
     public abstract T createPresenter();

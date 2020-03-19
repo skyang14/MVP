@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.yangshikun.mvp.baseMVP.BaseFragPresenter;
 
+import java.util.List;
+
 /**
  * Created by yang.shikun on 2020/3/16 14:30
  */
@@ -13,6 +15,10 @@ public class AFragPresenter extends BaseFragPresenter<AFragment,AFragModel> {
     @Override
     protected AFragModel createModel() {
         return new AFragModel();
+    }
+
+    public List<String> getStringList(){
+        return mModel.provideList();
     }
 
     @Override
